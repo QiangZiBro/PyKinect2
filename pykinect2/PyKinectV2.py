@@ -21,7 +21,7 @@ WSTRING = c_wchar_p
 from _ctypes import COMError
 comtypes.hresult.E_PENDING = 0x8000000A 
 
-import numpy.distutils.system_info as sysinfo
+import platform
 
 
 class _event(object):
@@ -2216,7 +2216,8 @@ tagSTATSTG._fields_ = [
     ('grfStateBits', c_ulong),
     ('reserved', c_ulong),
 ]
-required_size = 64 + sysinfo.platform_bits / 4
+platform_bits = int(platform.architecture()[0].replace('bit', ''))
+required_size = 64 + platform_bits / 4
 
 assert sizeof(tagSTATSTG) == required_size, sizeof(tagSTATSTG)
 assert alignment(tagSTATSTG) == 8, alignment(tagSTATSTG)
